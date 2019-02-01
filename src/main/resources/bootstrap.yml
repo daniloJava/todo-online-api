@@ -1,0 +1,25 @@
+server:
+  port: ${PORT:3001}
+
+spring:
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: Dbike@123
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    org.springframework.security: 'INFO'
+  pattern:
+    console: "%date %-5.5level %4.4thread [%25.25file:%3.3line] %msg%n"
+    file: "${spring.application.name} %date %-5.5level %4.4thread [%25.25file:%3.3line] %msg%n"
