@@ -1,13 +1,17 @@
 server:
-  port: ${PORT:3001}
+  servlet:
+    context-path: /task
+  port: ${PORT:8087}
 
 spring:
+  application:
+    name: todo-online-api-service
   datasource:
     platform: postgres
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/teste
     username: postgres
-    password: Dbike@123
+    password: postgres@123
   jpa:
     hibernate:
       ddl-auto: create-drop
