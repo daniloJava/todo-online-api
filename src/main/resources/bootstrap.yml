@@ -9,9 +9,9 @@ spring:
   datasource:
     platform: postgres
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/teste
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: postgres@123
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: create-drop

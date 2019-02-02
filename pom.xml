@@ -27,6 +27,7 @@
 		
 		<!-- Dependency version -->
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<springfox.version>2.9.2</springfox.version>
 
 		<!-- Plugins Version -->
 		<!-- dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version -->
@@ -38,6 +39,12 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+		
+		<!-- Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		
 		<!-- Postgres SQL -->
@@ -78,6 +85,24 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-spring-web</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		
 
 	</dependencies>
 
