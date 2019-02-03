@@ -16,6 +16,10 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+    properties: 
+      hibernate: 
+        format_sql: true
+        generate_statistics: true
 
 eureka:
   client:
