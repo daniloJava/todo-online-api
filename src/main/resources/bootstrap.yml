@@ -16,6 +16,12 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+<<<<<<< Updated upstream
+=======
+    properties: 
+      hibernate: 
+        format_sql: true
+>>>>>>> Stashed changes
 
 eureka:
   client:
