@@ -1,6 +1,5 @@
 package br.com.todo.onlineservice.service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.todo.onlineservice.exception.GroupTaskNotFoundException;
 import br.com.todo.onlineservice.model.GroupTask;
-import br.com.todo.onlineservice.model.Task;
 import br.com.todo.onlineservice.repository.GroupTaskRepository;
 
 @Service
@@ -23,11 +21,10 @@ public class GroupTaskService {
 		return groupTaskRepository.save(model);
 	}
 
-	public Task update(final Task model) {
+	public GroupTask update(final GroupTask model) {
 		if (!groupTaskRepository.existsById(model.getId())) {
 			throw new GroupTaskNotFoundException();
 		}
-		model.setDateUpdate(LocalDateTime.now());
 		return groupTaskRepository.save(model);
 	}
 

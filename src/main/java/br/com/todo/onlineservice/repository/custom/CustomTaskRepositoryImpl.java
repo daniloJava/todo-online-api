@@ -69,6 +69,6 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 		countSelect.where(predicates.toArray(new Predicate[predicates.size()]));
 
 		return em.createQuery(countSelect).getSingleResult();
-	}
+	} 
 
 }
