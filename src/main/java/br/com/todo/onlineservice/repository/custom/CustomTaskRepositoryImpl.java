@@ -33,6 +33,7 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 		CriteriaQuery<Task> cq = cb.createQuery(Task.class);
 
 		Root<Task> orderFrom = cq.from(Task.class);
+		orderFrom.fetch("group");
 
 		List<Predicate> predicates = new ArrayList<>();
 
@@ -69,6 +70,6 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 		countSelect.where(predicates.toArray(new Predicate[predicates.size()]));
 
 		return em.createQuery(countSelect).getSingleResult();
-	} 
+	}
 
 }
