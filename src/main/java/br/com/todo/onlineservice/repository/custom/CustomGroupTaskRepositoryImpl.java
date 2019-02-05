@@ -36,7 +36,7 @@ public class CustomGroupTaskRepositoryImpl implements CustomGroupTaskRepository 
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (StringUtils.isNoneBlank(filter)) {
-			predicates.add(cb.like(orderFrom.get("title"), "%" + filter + "%"));
+			predicates.add(cb.like(orderFrom.get("name"), "%" + filter + "%"));
 		}
 
 		CriteriaQuery<GroupTask> select = cq.where(predicates.toArray(new Predicate[predicates.size()]));
@@ -61,7 +61,7 @@ public class CustomGroupTaskRepositoryImpl implements CustomGroupTaskRepository 
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (StringUtils.isNoneBlank(filter)) {
-			predicates.add(cb.like(orderFrom.get("title"), "%" + filter + "%"));
+			predicates.add(cb.like(orderFrom.get("name"), "%" + filter + "%"));
 		}
 
 		CriteriaQuery<Long> countSelect = cq.select(cb.count(orderFrom.get("id")));

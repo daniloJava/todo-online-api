@@ -22,6 +22,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import br.com.todo.onlineservice.enumeration.StatusTaskEnum;
 import br.com.todo.onlineservice.model.converter.StatusTaskConverter;
 
@@ -56,7 +59,8 @@ public class Task implements Serializable {
 	@Column(name = "STATUS", length = 1, nullable = false)
 	private StatusTaskEnum status;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@Fetch(FetchMode.JOIN)
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_GROUP", foreignKey = @ForeignKey(name = "FK_tASK"), nullable = true)
 	private GroupTask group;
 

@@ -31,4 +31,9 @@ public class GroupTask implements Serializable {
 	@Column(name = "NAME", length = 50, nullable = false)
 	private String name;
 
+	public GroupTask(@NotNull @Size(max = 100) String name) {
+		super();
+		this.name = name;
+	}
+
 }

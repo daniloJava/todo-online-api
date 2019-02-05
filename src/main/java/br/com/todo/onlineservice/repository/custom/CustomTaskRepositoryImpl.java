@@ -42,7 +42,6 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 		}
 
 		CriteriaQuery<Task> select = cq.where(predicates.toArray(new Predicate[predicates.size()]));
-
 		Long count = countResult(filter);
 		if (count == 0) {
 			return new PageImpl<>(Collections.emptyList(), pageable, count);
