@@ -16,53 +16,52 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import br.com.todo.onlineservice.filter.FiltersTask;
-import br.com.todo.onlineservice.model.Task;
+import br.com.todo.onlineservice.model.GroupTask;
 
-public class CustomTaskRepositoryImpl implements CustomTaskRepository {
+public class CustomGroupTaskRepositoryImpl implements CustomGroupTaskRepository {
 
 	private EntityManager em;
 
-	public CustomTaskRepositoryImpl(EntityManager em) {
+	public CustomGroupTaskRepositoryImpl(EntityManager em) {
 		this.em = em;
 	}
 
 	@Override
-	public Page<Task> search(FiltersTask filter, Pageable pageable) {
+	public Page<GroupTask> search(final String filter, Pageable pageable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Task> cq = cb.createQuery(Task.class);
+		CriteriaQuery<GroupTask> cq = cb.createQuery(GroupTask.class);
 
-		Root<Task> orderFrom = cq.from(Task.class);
-		orderFrom.fetch("group");
+		Root<GroupTask> orderFrom = cq.from(GroupTask.class);
 
 		List<Predicate> predicates = new ArrayList<>();
 
-		if (StringUtils.isNoneBlank(filter.getTitle())) {
-			predicates.add(cb.like(orderFrom.get("title"), "%" + filter.getTitle() + "%"));
+		if (StringUtils.isNoneBlank(filter)) {
+			predicates.add(cb.like(orderFrom.get("name"), "%" + filter + "%"));
 		}
 
-		CriteriaQuery<Task> select = cq.where(predicates.toArray(new Predicate[predicates.size()]));
+		CriteriaQuery<GroupTask> select = cq.where(predicates.toArray(new Predicate[predicates.size()]));
+
 		Long count = countResult(filter);
 		if (count == 0) {
 			return new PageImpl<>(Collections.emptyList(), pageable, count);
 		}
 
-		TypedQuery<Task> typedQuery = em.createQuery(select);
+		TypedQuery<GroupTask> typedQuery = em.createQuery(select);
 		typedQuery.setFirstResult((int) pageable.getOffset());
 		typedQuery.setMaxResults(pageable.getPageSize());
 
 		return new PageImpl<>(typedQuery.getResultList(), pageable, count);
 	}
 
-	private Long countResult(FiltersTask filter) {
+	private Long countResult(String filter) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
-		Root<Task> orderFrom = cq.from(Task.class);
+		Root<GroupTask> orderFrom = cq.from(GroupTask.class);
 		List<Predicate> predicates = new ArrayList<>();
 
-		if (StringUtils.isNoneBlank(filter.getTitle())) {
-			predicates.add(cb.like(orderFrom.get("title"), "%" + filter.getTitle() + "%"));
+		if (StringUtils.isNoneBlank(filter)) {
+			predicates.add(cb.like(orderFrom.get("name"), "%" + filter + "%"));
 		}
 
 		CriteriaQuery<Long> countSelect = cq.select(cb.count(orderFrom.get("id")));

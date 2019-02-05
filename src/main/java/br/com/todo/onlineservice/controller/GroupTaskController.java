@@ -1,3 +1,4 @@
+
 package br.com.todo.onlineservice.controller;
 
 import java.util.Optional;
@@ -66,8 +67,8 @@ public class GroupTaskController {
 			@ApiImplicitParam(name = "page", dataType = "int", paramType = "query", value = "Results page to retrieve (0..N)"), //
 			@ApiImplicitParam(name = "size", dataType = "int", paramType = "query", value = "Number of tasks per page") //
 	})
-	public Page<GroupTask> search(String filter, final @ApiIgnore Pageable pageable) {
-		return groupTaskService.search(filter, pageable);
+	public Page<GroupTask> search(String q, final @ApiIgnore Pageable pageable) {
+		return groupTaskService.search(q, pageable);
 	}
 
 }
