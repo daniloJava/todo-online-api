@@ -1,21 +1,14 @@
 #============================================================================================
 # FROM [nome da imagem]:[versão/tag da imagem]
 # Referência: https://docs.docker.com/engine/reference/builder/#from
-# 
-# Define uma imagem local ou pública do Docker Store. Aqui é utilizado uma imagem customizada 
-# e comum aos demais microsserviços da Secretaria de Segurança Pública do Estado de São Paulo, 
-# tendo como base a imagem oficial do Java na versão 8. Em sua primeira execução, ela será 
-# baixada para o computador e usada no build para criar as imagens da aplicação.
 #============================================================================================
 FROM debian:stretch
 
 #============================================================================================
 # LABEL maintainer=[nome e e-mail do mantenedor da imagem]
 # Referência: https://docs.docker.com/engine/reference/builder/#label
-#
-# Indica o responsável/autor por manter a imagem.
 #============================================================================================
-LABEL maintainer="Raphael F. Jesus <rjesus@magnasistemas.com.br>"
+LABEL maintainer="Danilo Manoel Oliveira da Silva <danilo.manoel_oliveira@hotmail.com>"
 
 #============================================================================================
 # ARG <nome do argumento>[=<valor padrão>]

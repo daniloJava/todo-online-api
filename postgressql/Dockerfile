@@ -2,9 +2,6 @@
 # FROM [nome da imagem]:[versão/tag da imagem]
 # Referência: https://docs.docker.com/engine/reference/builder/#from
 # 
-# Define uma imagem local ou pública do Docker Store. Aqui é utilizado uma imagem oficial do 
-# PostgreSQL. Em sua primeira execução, ela será baixada para o computador e usada no build 
-# para criar a imagem customizada do PostgreSQL.
 #============================================================================================
 FROM postgres:latest
 
@@ -14,7 +11,7 @@ FROM postgres:latest
 #
 # Indica o responsável/autor por manter a imagem.
 #============================================================================================
-LABEL maintainer="Raphael F. Jesus <raphaelfjesus@gmail.com>"
+LABEL maintainer="Danilo Manoel Oliveira da Silva <danilo.manoel_oliveira@hotmail.com>"
 
 #============================================================================================
 # ENV [nome da variável de ambiente]
