@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  postgresql:
+    image: postgres:latest
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data/pgdata
+      - /opt/log:/var/lib/postgresql/data/pg_log
+    ports:
+      - 5432:5432
+    networks:
+      - microservices
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 512m
+      placement:
+        constraints: [node.role == manager]
+
+volumes:
+  postgresql-data:
+    driver: local
+
+networks:
+  microservices:
+    driver: overlay

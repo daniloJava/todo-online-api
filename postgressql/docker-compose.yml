@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgresql1:
+    image: postgres:latest
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=todo
+      - POSTGRES_USER=postgres
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data/pgdata
+      - /opt/log:/var/lib/postgresql/data/pg_log
+    ports:
+      - 5432:5432
+volumes:
+  postgresql-data:
+    driver: local
+
+networks:
+  microservices:
+    driver: overlay

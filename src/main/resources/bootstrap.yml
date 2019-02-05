@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /task
-  port: ${PORT:8087}
+  port: ${PORT:3088}
 
 spring:
   application:
@@ -9,7 +9,7 @@ spring:
   datasource:
     platform: postgres
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/todo
     username: postgres
     password: postgres
   jpa:
@@ -30,3 +30,22 @@ logging:
   pattern:
     console: "%date %-5.5level %4.4thread [%25.25file:%3.3line] %msg%n"
     file: "${spring.application.name} %date %-5.5level %4.4thread [%25.25file:%3.3line] %msg%n"
+    
+---
+spring:
+  profiles: docker
+  application:
+    name: todo-online-api-service
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties: 
+      hibernate: 
+        format_sql: true

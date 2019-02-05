@@ -30,7 +30,7 @@
 		<springfox.version>2.9.2</springfox.version>
 
 		<!-- Plugins Version -->
-		<!-- dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version -->
+		<dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -145,10 +145,16 @@
 
     <!-- Exemple to use: mvn package -Pdevelopment ou -Pproduction -->
     <profiles>
+				<profile>
+            <id>production</id>
+            <properties>
+                <!-- docker.image.prefix>registry.dev.policiacivil.sp.gov.br:5000</docker.image.prefix -->
+            </properties>
+        </profile>
         <profile>
             <id>development</id>
             <properties>
-                <!-- docker.image.prefix>Registry</docker.image.prefix -->
+                <docker.image.prefix>registry.dev.policiacivil.sp.gov.br:5000</docker.image.prefix>
             </properties>
         </profile>
     </profiles>
