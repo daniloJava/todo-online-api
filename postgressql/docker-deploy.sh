@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DOCKER_TAG=postgres:latest
+DOCKER_TAG=danilojava/todo-online:postgres
 
 # Constrói a imagem customizada do PostgreSQL
 docker build --tag ${DOCKER_TAG} .

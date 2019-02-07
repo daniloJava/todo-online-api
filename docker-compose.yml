@@ -1,6 +1,6 @@
 version: '3'
 services:
-  ssp-infra-postgres:
+  todo-infra-postgres:
     image: danilojava/todo-online:postgres
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata

@@ -1,7 +1,7 @@
 version: '3'
 services:
-  ssp-infra-postgres:
-    image: postgres:latest
+  todo-infra-postgres:
+    image: danilojava/todo-online:postgres
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_DB=todo
@@ -23,11 +23,11 @@ services:
       placement:
         constraints: [node.role == manager]
   todo-task-service:
-    image: registry.dev.policiacivil.sp.gov.br:5000/todo-online-api-service:0.0.1
+    image: danilojava/todo-online:todo-online-api
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-Xms192m -Xmx192m
-      - DATASOURCE_URL=jdbc:postgresql://ssp-infra-postgres:5432/todo
+      - DATASOURCE_URL=jdbc:postgresql://todo-infra-postgres:5432/todo
       - DATASOURCE_USERNAME=postgres
       - "DATASOURCE_PASSWORD=postgres"
     ports:

@@ -6,5 +6,7 @@ set -e
 # podendo extender seu uso para execução de DDLs e DMLs.
 ##
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    DROP DATABASE IF EXISTS todo;
+    CREATE DATABASE todo;
     GRANT ALL PRIVILEGES ON DATABASE todo TO postgres;
 EOSQL
