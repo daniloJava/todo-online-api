@@ -1,7 +1,7 @@
 version: '3'
 services:
   ssp-infra-postgres:
-    image: postgres:latest
+    image: danilojava/todo-online:postgres
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_DB=todo
@@ -15,7 +15,7 @@ services:
       - postgresql-data:/var/lib/postgresql/data/pgdata
       - /opt/log:/var/lib/postgresql/data/pg_log
   todo-task-service:
-    image: registry.dev.policiacivil.sp.gov.br:5000/todo-online-api-service:0.0.1
+    image: danilojava/todo-online:todo-online-api
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-Xms192m -Xmx192m
