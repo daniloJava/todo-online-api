@@ -1,51 +1,48 @@
 #============================================================================================
-# FROM [nome da imagem]:[versão/tag da imagem]
-# Referência: https://docs.docker.com/engine/reference/builder/#from
-# 
+# FROM [Image Reference]:[version/image tag]
+# Reference: https://docs.docker.com/engine/reference/builder/#from
 #============================================================================================
 FROM postgres:latest
 
 #============================================================================================
-# LABEL maintainer=[nome e e-mail do mantenedor da imagem]
-# Referência: https://docs.docker.com/engine/reference/builder/#label
-#
-# Indica o responsável/autor por manter a imagem.
+# LABEL maintainer=[Name and e-mail]
+# Reference: https://docs.docker.com/engine/reference/builder/#label
 #============================================================================================
 LABEL maintainer="Danilo Manoel Oliveira da Silva <danilo.manoel_oliveira@hotmail.com>"
 
 #============================================================================================
-# ENV [nome da variável de ambiente]
-# Referência: https://docs.docker.com/engine/reference/builder/#env
-#
-# Abaixo estão as variáveis utilizadas para configurar o servidor do PostgreSQL:
+# ENV [name variable]
+# Reference: https://docs.docker.com/engine/reference/builder/#env
+# 
+# Below are the variables used to configure the PostgreSQL server:
 #
 # LANG
-# Define o locale padrão que será utilizado pelo PostgreSQL.
+# Defines the default locale that will be used by PostgreSQL.
 #
 # PGDATA
-# Essa variável de ambiente pode ser usada para definir outro local, como um subdiretório, 
-# para armazenar os arquivos do banco de dados. O padrão é '/var/lib/postgresql/data', mas 
-# se o volume de dados usado for um ponto de montagem File System, o time do Postgres 
-# recomenda criar um subdiretório (por exemplo, /var/lib/postgresql/data/pgdata) para conter 
-# os dados. 
+# This environment variable can be used to define another location, such as a subdirectory,
+# to store the database files. The default is '/ var / lib / postgresql / data', but
+# If the volume of data used is a File System mount point, the Postgres
+# recommends creating a subdirectory (for example, / var / lib / postgresql / data / pgdata) to contain
+# the data. 
 #
 # POSTGRES_CONFIG
-# Diretório temporário para armazenar arquivos que poderão ser descartados posteriormente.
+# Temporary directory to store files that can be discarded later.
 #
 # POSTGRES_DB
-# Usada para definir um nome para o banco de dados padrão que é criado ao iniciar a imagem 
-# pela primeira vez. Se não especificado, o valor da variável POSTGRES_USER será usado como 
-# nome do banco.
+# Used to define a name for the default database that is created at the start of the image
+# for the first time. If not specified, the value of the POSTGRES_USER variable will be used as
+# Bank name.
 #
 # POSTGRES_USER
-# Usada em conjunto com a variável POSTGRES_PASSWORD para definir um usuário e senha. Esta 
-# variável criará um usuário com privilégios administrativo (superusuário). Se não informada, 
-# o usuário padrão "postgres" será usado.
+# Used in conjunction with the POSTGRES_PASSWORD variable to set a user and password. It is
+# variable will create a user with administrative (superuser) privileges. If not informed,
+# the default user "postgres" will be used.
 #
 # POSTGRES_PASSWORD
-# Usada em conjunto com a variável POSTGRES_USER para definir um usuário e senha. Esta 
-# variável é recomendada para permitir o acesso a partir de outros hosts, obrigando o usuário 
-# a conectar-se no banco com uma senha.
+# Used in conjunction with the POSTGRES_USER variable to set a user and password. It is
+# variable is recommended to allow access from other hosts, forcing the user
+# to connect to the bank with a password.
 #============================================================================================
 ENV \
     PGDATA=/var/lib/postgresql/data/pgdata \
@@ -55,35 +52,35 @@ ENV \
     POSTGRES_PASSWORD=postgres
 
 #============================================================================================
-# COPY [arquivo a ser copiado] [destino do arquivo copiado]
-# Referência: https://docs.docker.com/engine/reference/builder/#copy
+# ADD [Folder to be copy] [destination of copied file]
+# Reference: https://docs.docker.com/engine/reference/builder/#add
 #
-# Abaixo estão os arquivos utilizados para configurar o servidor do PostgreSQL:
+# Below are the files used to configure the PostgreSQL server:
 #
 # - "build/init-config.sh"
-# Arquivo responsável pela execução de algumas configurações no ambiente Postgres, como por 
-# exemplo a sobrescrita do arquivo "postgresql.conf" padrão por um outro customizado, já que 
-# esse arquivo é gerado em Runtime.
+# File responsible for running some settings in the Postgres environment, such as
+# example the overwriting of the default "postgresql.conf" file by another custom, since
+# this file is generated in Runtime.
 #
 # - "build/init-user-db.sh"
-# Arquivo para criar um usuário e banco de dados no PostgreSQL. Esse script é apenas para 
-# demonstrar o procedimento necessário para criar objetos de banco (DDL) ao executar a imagem 
-# pela primeira vez.
+# File to create a user and database in PostgreSQL. This script is only for
+# Demonstrate the procedure required to create bank objects (DDL) when executing the image
+# for the first time.
 #
 # - "build/postgresql.conf"
-# Arquivo de configuirações do PostgreSQL. Nele é possível definir a quantidade máxima de 
-# conexões permitidas, timeout das conexões, lista de IPs que poderão acessar o banco, 
-# mecanismo de rotação dos logs gerados, entre outros recursos. 
+# PostgreSQL config file. It is possible to set the maximum quantity of
+# allowed connections, connections timeout, list of IPs that can access the database,
+# mechanism of rotation of generated logs, among other resources.
 #============================================================================================
 COPY [ "build/init-config.sh", "build/init-user-db.sh", "/docker-entrypoint-initdb.d/" ]
 COPY build/postgresql.conf $POSTGRES_CONFIG/postgresql.conf
 
 #============================================================================================
-# RUN [comandos a serem executados]
-# Referência: https://docs.docker.com/engine/reference/builder/#run
+# RUN [commands to be executed]
+# Reference: https://docs.docker.com/engine/reference/builder/#run
 # 
-# A instrução RUN executará qualquer comando sobre uma nova camada da imagem atual e 
-# confirmará os resultados. A imagem resultante será usada para o próximo passo no Dockerfile.
+# The RUN instruction will execute any command over a new layer of the current image and
+# will confirm the results. The resulting image will be used for the next step in Dockerfile.
 #============================================================================================
 RUN \
     apt-get -y update \

@@ -12,7 +12,7 @@ services:
     networks:
       - microservices
     volumes:
-      - postgresql-data:/var/lib/postgresql/data/pgdata
+      - postgresqldata:/var/lib/postgresql/data/pgdata
       - /opt/log:/var/lib/postgresql/data/pg_log
   todo-task-service:
     image: danilojava/todo-online:todo-online-api
@@ -30,7 +30,7 @@ services:
       - /opt/log:/opt/log
 
 volumes:
-  postgresql-data:
+  postgresqldata:
     driver: local
   logs:
     driver: local

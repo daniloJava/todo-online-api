@@ -2,9 +2,9 @@
 set -e
 
 ##
-# Sobrescreve o arquivo de configuração do PostgreSQL gerado em runtime no diretório 
-# definido pela variável $PGDATA ("/var/lib/postgresql/data/" valor padrão), permitindo 
-# customizar os parâmetros de inicialização do PostgreSQL.
+# Overwrite runtime-generated PostgreSQL configuration file in directory
+# defined by the variable $ PGDATA ("/ var / lib / postgresql / data /" default value), allowing
+# customize the PostgreSQL startup parameters.
 ##
 cat $POSTGRES_CONFIG/postgresql.conf > $PGDATA/postgresql.conf
 

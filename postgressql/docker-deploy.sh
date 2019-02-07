@@ -3,14 +3,14 @@ set -e
 
 DOCKER_TAG=danilojava/todo-online:postgres
 
-# Constrói a imagem customizada do PostgreSQL
+# Builds the custom PostgreSQL image
 docker build --tag ${DOCKER_TAG} .
 
-# Envia a imagem construída para o repositório Registry
+# Sends the constructed image to the Registry repository
 # docker push ${DOCKER_TAG}
 
 # docker-compose up
 
-# Executa o deploy da imagem Docker no Cluster Swarm
+# Performs the deploy of the Docker image in the Cluster Swarm
 # docker stack deploy --compose-file docker-compose.local.yml --with-registry-auth INFRA
 

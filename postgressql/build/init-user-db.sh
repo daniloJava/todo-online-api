@@ -2,8 +2,8 @@
 set -e
 
 ##
-# Script utilizado para criação de usuário e banco de dados ao criar o serviço no ambiente Docker, 
-# podendo extender seu uso para execução de DDLs e DMLs.
+# Script used for user and database creation when creating the service in the Docker environment,
+# being able to extend its use to execute DDLs and DMLs.
 ##
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     DROP DATABASE IF EXISTS todo;
