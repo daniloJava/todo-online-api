@@ -11,5 +11,5 @@ mvn dockerfile:build -Pdevelopment
 # mvn dockerfile:push -Pdevelopment
 
 # Performs the deploy of the Docker image in the Cluster Swarm
-# docker stack deploy --compose-file todo_online_docker-compose.local.yml --with-registry-auth APP
+docker stack deploy --compose-file todo_online_docker-compose.local.yml --with-registry-auth APP
 
