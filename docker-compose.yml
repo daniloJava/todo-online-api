@@ -1,0 +1,40 @@
+version: '3'
+services:
+  todo-infra-postgres:
+    image: danilojava/todo-online:postgres
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=todo
+      - POSTGRES_USER=postgres
+      - "POSTGRES_PASSWORD=postgres"
+    ports:
+      - 5432:5432
+    networks:
+      - microservices
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data/pgdata
+      - /opt/log:/var/lib/postgresql/data/pg_log
+  todo-task-service:
+    image: danilojava/todo-online:todo-online-api
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_OPTS=-Xms192m -Xmx192m
+      - DATASOURCE_URL=jdbc:postgresql://ssp-infra-postgres:5432/todo
+      - DATASOURCE_USERNAME=postgres
+      - "DATASOURCE_PASSWORD=postgres"
+    ports:
+      - 3088:3088
+    networks:
+      - microservices
+    volumes:
+      - /opt/log:/opt/log
+
+volumes:
+  postgresqldata:
+    driver: local
+  logs:
+    driver: local
+
+networks:
+  microservices:
+    driver: overlay

@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##
+# Pré-requisitos (Plugins)
+#
+# $ vagrant plugin install vagrant-vbguest
+##
+
+##
+# Comandos úteis:
+#
+# Para criar a máquina virtual definida nesse arquivo, execute o comando abaixo a partir do diretório do Vagrantfile:
+# $ vagrant up
+#
+# Para salvar o estado da máquina, execute o comando vagrant snapshot save [vm-name] SNAPSHOT_NAME, exemplo:
+# $ vagrant snapshot save postgresql postgresql-prepared-host
+#
+# Para restaurar o estado da máquina a partir de um snapshot, execute o comando vagrant snapshot restore [vm-name] SNAPSHOT_NAME, exemplo:
+# $ vagrant snapshot restore postgresql postgresql-prepared-host
+# 
+# Para acessar a máquina criada, basta executar o comando vagrant ssh [vm-name], exemplo:
+# $ vagrant ssh postgresql
+##
+
+Vagrant.configure(2) do |config|
+  
+  config.vbguest.auto_update = false
+
+  config.vm.define "postgresql" do |subconfig|
+    subconfig.vm.box = "centos/7"
+    subconfig.vm.hostname = "postgresql.local.com.br"
+    subconfig.vm.network "private_network", ip: "192.168.100.110"
+    subconfig.vm.synced_folder ".", "/vagrant"
+
+    subconfig.vm.provider "virtualbox" do |v, override|
+      v.name = subconfig.vm.hostname
+      v.cpus = 2
+      v.memory = 1024
+    end
+  end
+
+end

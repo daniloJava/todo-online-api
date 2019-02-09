@@ -23,14 +23,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<!-- docker.image.prefix>nexus.prodesp.sp.gov.br</docker.image.prefix -->
+		<docker.image.prefix>danilojava</docker.image.prefix>
 		
 		<!-- Dependency version -->
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<springfox.version>2.9.2</springfox.version>
 
 		<!-- Plugins Version -->
-		<!-- dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version -->
+		<dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -143,12 +143,17 @@
 		</plugins>
 	</build>
 
-    <!-- Exemple to use: mvn package -Pdevelopment ou -Pproduction -->
     <profiles>
+				<profile>
+            <id>production</id>
+            <properties>
+                <!-- docker.image.prefix>registry.dev.policiacivil.sp.gov.br:5000</docker.image.prefix -->
+            </properties>
+        </profile>
         <profile>
             <id>development</id>
             <properties>
-                <!-- docker.image.prefix>Registry</docker.image.prefix -->
+                <!-- docker.image.prefix>todo-online:todo-online-api</docker.image.prefix-->
             </properties>
         </profile>
     </profiles>
