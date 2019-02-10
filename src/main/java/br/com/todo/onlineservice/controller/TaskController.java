@@ -1,6 +1,7 @@
 
 package br.com.todo.onlineservice.controller;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -69,7 +70,7 @@ public class TaskController {
 			@ApiImplicitParam(name = "page", dataType = "int", paramType = "query", value = "Results page to retrieve (0..N)"), //
 			@ApiImplicitParam(name = "size", dataType = "int", paramType = "query", value = "Number of tasks per page") //
 	})
-	public Page<Task> search(FiltersTask filter, final @ApiIgnore Pageable pageable) {
+	public Page<Task> search(FiltersTask filter, final @ApiIgnore Pageable pageable, Principal principal) {
 		return taskService.search(filter, pageable);
 	}
 
