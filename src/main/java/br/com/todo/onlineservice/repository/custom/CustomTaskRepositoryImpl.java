@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 
 import br.com.todo.onlineservice.filter.FiltersTask;
 import br.com.todo.onlineservice.model.Task;
+import br.com.todo.onlineservice.model.User;
 
 public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 
@@ -28,17 +29,24 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
 	}
 
 	@Override
-	public Page<Task> search(FiltersTask filter, Pageable pageable) {
+	public Page<Task> search(FiltersTask filter, Pageable pageable, User user) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Task> cq = cb.createQuery(Task.class);
 
 		Root<Task> orderFrom = cq.from(Task.class);
 		orderFrom.fetch("group");
+		orderFrom.fetch("createdBy");
 
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (StringUtils.isNoneBlank(filter.getTitle())) {
 			predicates.add(cb.like(orderFrom.get("title"), "%" + filter.getTitle() + "%"));
+		}
+
+		if (user != null && !user.getRoles().isEmpty()) {
+			if (user.getRoles().stream().noneMatch(role -> StringUtils.equalsIgnoreCase(role, "ROLE_ADMIN"))) {
+				predicates.add(cb.equal(orderFrom.get("createdBy"), user.getId()));
+			}
 		}
 
 		CriteriaQuery<Task> select = cq.where(predicates.toArray(new Predicate[predicates.size()]));

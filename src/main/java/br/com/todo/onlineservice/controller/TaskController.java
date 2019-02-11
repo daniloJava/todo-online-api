@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,23 +45,23 @@ public class TaskController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Create a new Task", response = Integer.class)
-	public Integer create(@RequestBody @Valid final Task task) {
-		return taskService.create(task).getId();
+	public Integer create(@RequestBody @Valid final Task task, UsernamePasswordAuthenticationToken principal) {
+		return taskService.create(task, principal).getId();
 	}
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Update the task by id")
-	public void update(@RequestBody @Valid final Task task, @PathVariable final Integer id) {
+	public void update(@RequestBody @Valid Task task, @PathVariable final Integer id, UsernamePasswordAuthenticationToken principal) {
 		task.setId(id);
-		taskService.update(task);
+		taskService.update(task, principal);
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Retrieve the task by id")
-	public Optional<Task> findById(@ApiParam(value = "Unique identifier", required = true) @PathVariable final Integer id) {
-		return taskService.findById(id);
+	public Optional<Task> findById(@ApiParam(value = "Unique identifier", required = true) @PathVariable final Integer id, Principal principal) {
+		return taskService.findById(id, principal);
 	}
 
 	@GetMapping
@@ -70,15 +71,15 @@ public class TaskController {
 			@ApiImplicitParam(name = "page", dataType = "int", paramType = "query", value = "Results page to retrieve (0..N)"), //
 			@ApiImplicitParam(name = "size", dataType = "int", paramType = "query", value = "Number of tasks per page") //
 	})
-	public Page<Task> search(FiltersTask filter, final @ApiIgnore Pageable pageable, Principal principal) {
-		return taskService.search(filter, pageable);
+	public Page<Task> search(FiltersTask filter, final @ApiIgnore Pageable pageable, UsernamePasswordAuthenticationToken principal) {
+		return taskService.search(filter, pageable, principal);
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Delete the task by id")
-	public void deleteById(@ApiParam(value = "Unique identifier", required = true) @PathVariable final Integer id) {
-		taskService.deleteById(id);
+	public void deleteById(@ApiParam(value = "Unique identifier", required = true) @PathVariable final Integer id, Principal principal) {
+		taskService.deleteById(id, principal);
 	}
 
 }

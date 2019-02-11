@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,8 @@ import lombok.Setter;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import br.com.todo.onlineservice.enumeration.StatusTaskEnum;
 import br.com.todo.onlineservice.model.converter.StatusTaskConverter;
@@ -63,5 +66,15 @@ public class Task implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_GROUP", foreignKey = @ForeignKey(name = "FK_tASK"), nullable = true)
 	private GroupTask group;
+
+	@CreatedBy
+	@ManyToOne
+	@JoinColumn(name = "created_by")
+	private User createdBy;
+
+	@LastModifiedBy
+	@ManyToOne
+	@JoinColumn(name = "last_modified_by")
+	private User lastModifiedBy;
 
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.todo.onlineservice.model.User;
 import br.com.todo.onlineservice.repository.custom.CustomUserRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer>, CustomUserRepository {
+public interface UserRepository extends JpaRepository<User, Long>, CustomUserRepository {
 
 	Optional<User> findByUsername(String username);
 

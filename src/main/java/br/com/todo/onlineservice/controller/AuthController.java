@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.todo.onlineservice.repository.UserRepository;
 import br.com.todo.onlineservice.security.jwt.JwtTokenProvider;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 
 	@Autowired
@@ -33,7 +36,7 @@ public class AuthController {
 	@Autowired
 	UserRepository users;
 
-	@PostMapping("/signin")
+	@PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity signin(@RequestBody AuthenticationRequest data) {
 
 		try {
