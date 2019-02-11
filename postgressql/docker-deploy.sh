@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DOCKER_TAG=postgresteste
+DOCKER_TAG=postgres
 
 # Builds the custom PostgreSQL image
 docker build --tag ${DOCKER_TAG} .

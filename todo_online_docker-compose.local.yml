@@ -1,11 +1,33 @@
 version: '3'
 services:
+  todo-infra-postgres:
+    image: postgres:latest
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=todo
+      - POSTGRES_USER=postgres
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data/pgdata
+      - /opt/log:/var/lib/postgresql/data/pg_log
+    ports:
+      - 5432:5432
+    networks:
+      - microservices
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 512m
+      placement:
+        constraints: [node.role == manager]
   todo-task-service:
     image: danilojava/todo-online-api-service:0.0.1
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-Xms192m -Xmx192m
-      - DATASOURCE_URL=jdbc:postgresql://postgresql-teste:5432/todo
+      - DATASOURCE_URL=jdbc:postgresql://todo-infra-postgres:5432/todo
       - DATASOURCE_USERNAME=postgres
       - "DATASOURCE_PASSWORD=postgres"
     ports:

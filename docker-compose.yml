@@ -19,7 +19,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-Xms192m -Xmx192m
-      - DATASOURCE_URL=jdbc:postgresql://ssp-infra-postgres:5432/todo
+      - DATASOURCE_URL=jdbc:postgresql://todo-infra-postgres:5432/todo
       - DATASOURCE_USERNAME=postgres
       - "DATASOURCE_PASSWORD=postgres"
     ports:
